@@ -3,7 +3,7 @@ const Link = artifacts.require("Link")
 const truffleAssert = require("truffle-assertions")
 
 // each contract redeploys a contract
-contract.skip("Dex", accounts=> {
+contract("Dex", accounts=> {
     // each "it" is an individial unit test
     it("should only be possible for owner to add tokens", async() => {
         let dex = await Dex.deployed()

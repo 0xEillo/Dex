@@ -13,7 +13,7 @@ contract Dex is Wallet {
 
     using SafeMath for uint256;
 
-    enum Side {
+    enum BuyOrSell {
         BUY,
         SELL
     }
@@ -21,7 +21,7 @@ contract Dex is Wallet {
     struct Order {
         uint id;
         address trader;
-        Side side;
+        BuyOrSell buyOrSell;
         bytes32 ticker;
         uint amount;
         uint price;
@@ -33,37 +33,37 @@ contract Dex is Wallet {
     mapping(bytes32 => mapping(uint => Order[])) public orderBook;
 
     /**
-     * @dev Returns orderbook with desired side and ticker
+     * @dev Returns orderbook with desired BuyOrSell and ticker
      * @param ticker Represents the symbol of a token
-     * @param side Represents if the order is buy/sell    
+     * @param buyOrSell Represents if the order is buy/sell    
      */
-    function getOrderBook(bytes32 ticker, Side side) view public returns(Order[] memory){
-        return orderBook[ticker][uint(side)];
+    function getOrderBook(bytes32 ticker, BuyOrSell buyOrSell) view public returns(Order[] memory){
+        return orderBook[ticker][uint(buyOrSell)];
     }
 
     /**
      * @dev Allows users to create buy/sell limitOrders
-     * @param side Represents if the order is buy/sell
+     * @param buyOrSell Represents if the order is buy/sell
      * @param ticker represents the symbol of a token
      * @param amount Represents the amount of tokens to buy or sell
      * @param price Represents the price at which to buy/sell tokens
      */
-    function createLimitOrder(Side side, bytes32 ticker, uint amount, uint price) public{
-        if(side == Side.BUY){
+    function createLimitOrder(BuyOrSell buyOrSell, bytes32 ticker, uint amount, uint price) public{
+        if(buyOrSell == BuyOrSell.BUY){
             require(balances[msg.sender]["ETH"] >= amount.mul(price));
         }
-        else if(side == Side.SELL){
+        else if(buyOrSell == BuyOrSell.SELL){
             require(balances[msg.sender][ticker] >= amount);
         }
 
-        Order[] storage orders = orderBook[ticker][uint(side)];
+        Order[] storage orders = orderBook[ticker][uint(buyOrSell)];
         orders.push(
-            Order(nextOrderId, msg.sender, side, ticker, amount, price, 0)
+            Order(nextOrderId, msg.sender, buyOrSell, ticker, amount, price, 0)
         );
 
         //Bubble sort
         uint i = orders.length > 0 ? orders.length - 1 : 0;
-        if(side == Side.BUY){
+        if(buyOrSell == BuyOrSell.BUY){
             while(i > 0){
                 if(orders[i - 1].price > orders[i].price) {
                     break;
@@ -74,7 +74,7 @@ contract Dex is Wallet {
                 i--;
             }
         }
-        else if(side == Side.SELL){
+        else if(buyOrSell == BuyOrSell.SELL){
             while(i > 0){
                 if(orders[i - 1].price < orders[i].price) {
                     break;   
@@ -91,23 +91,23 @@ contract Dex is Wallet {
 
     /**
      * @dev Allows users to create buy/sell market orders
-     * @param side Represents if the order is buy/sell
+     * @param buyOrSell Represents if the order is buy/sell
      * @param ticker represents the symbol of a token
      * @param amount Represents the amount of tokens to buy or sell
      */
-    function createMarketOrder(Side side, bytes32 ticker, uint amount) public{
-        if(side == Side.SELL){
+    function createMarketOrder(BuyOrSell buyOrSell, bytes32 ticker, uint amount) public{
+        if(buyOrSell == BuyOrSell.SELL){
             require(balances[msg.sender][ticker] >= amount, "Insuffient balance");
         }
         
-        uint orderBookSide;
-        if(side == Side.BUY){
-            orderBookSide = 1;
+        uint orderBookBuyOrSell;
+        if(buyOrSell == BuyOrSell.BUY){
+            orderBookBuyOrSell = 1;
         }
         else{
-            orderBookSide = 0;
+            orderBookBuyOrSell = 0;
         }
-        Order[] storage orders = orderBook[ticker][orderBookSide];
+        Order[] storage orders = orderBook[ticker][orderBookBuyOrSell];
 
         uint totalFilled = 0;
 
@@ -126,7 +126,7 @@ contract Dex is Wallet {
             orders[i].filled = orders[i].filled.add(filled);
             uint cost = filled.mul(orders[i].price);
 
-            if(side == Side.BUY){
+            if(buyOrSell == BuyOrSell.BUY){
                 //Verify that the buyer has enough ETH to cover the purchase (require)
                 require(balances[msg.sender]["ETH"] >= cost);
                 //msg.sender is the buyer
@@ -136,7 +136,7 @@ contract Dex is Wallet {
                 balances[orders[i].trader][ticker] = balances[orders[i].trader][ticker].sub(filled);
                 balances[orders[i].trader]["ETH"] = balances[orders[i].trader]["ETH"].add(cost);
             }
-            else if(side == Side.SELL){
+            else if(buyOrSell == BuyOrSell.SELL){
                 //Msg.sender is the seller
                 balances[msg.sender][ticker] = balances[msg.sender][ticker].sub(filled);
                 balances[msg.sender]["ETH"] = balances[msg.sender]["ETH"].add(cost);

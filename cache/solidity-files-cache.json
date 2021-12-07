@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\olive\\Documents\\dex\\contracts\\wallet.sol": {
-      "lastModificationDate": 1635523951648,
-      "contentHash": "1c667697f85a85256caf54c8791af1c6",
+      "lastModificationDate": 1638898929435,
+      "contentHash": "2006d3aca3daa904c3412f15c8f88a11",
       "sourceName": "contracts/wallet.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -175,6 +175,186 @@
       ],
       "artifacts": [
         "Context"
+      ]
+    },
+    "C:\\Users\\olive\\Documents\\dex\\contracts\\dex.sol": {
+      "lastModificationDate": 1638898619170,
+      "contentHash": "382e4f75f7cf1c0696e00a4cbea3362b",
+      "sourceName": "contracts/dex.sol",
+      "solcConfig": {
+        "version": "0.8.0",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./wallet.sol"
+      ],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.9"
+      ],
+      "artifacts": [
+        "Dex"
+      ]
+    },
+    "C:\\Users\\olive\\Documents\\dex\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol": {
+      "lastModificationDate": 1635440304088,
+      "contentHash": "2cd550cedf51b8d294607dad5023d717",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      "solcConfig": {
+        "version": "0.8.0",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol",
+        "./extensions/IERC20Metadata.sol",
+        "../../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC20"
+      ]
+    },
+    "C:\\Users\\olive\\Documents\\dex\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol": {
+      "lastModificationDate": 1635440304396,
+      "contentHash": "aa1be06992a99bb7393b26a6af3c4dfb",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.0",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20Metadata"
+      ]
+    },
+    "C:\\Users\\olive\\Documents\\dex\\contracts\\tokens.sol": {
+      "lastModificationDate": 1638738083061,
+      "contentHash": "72d0037f708fbb903178ce70515a4021",
+      "sourceName": "contracts/tokens.sol",
+      "solcConfig": {
+        "version": "0.8.0",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.9"
+      ],
+      "artifacts": [
+        "Link"
+      ]
+    },
+    "C:\\Users\\olive\\Documents\\dex\\contracts\\Migrations.sol": {
+      "lastModificationDate": 1638809952812,
+      "contentHash": "9c4c72a134008614faaac02229099f9d",
+      "sourceName": "contracts/Migrations.sol",
+      "solcConfig": {
+        "version": "0.8.0",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.9"
+      ],
+      "artifacts": [
+        "Migrations"
       ]
     }
   }

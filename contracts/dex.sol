@@ -13,6 +13,10 @@ contract Dex is Wallet {
 
     using SafeMath for uint256;
 
+    uint public nextOrderId = 0;
+
+    mapping(bytes32 => mapping(uint => Order[])) public orderBook;
+
     enum BuyOrSell {
         BUY,
         SELL
@@ -27,10 +31,6 @@ contract Dex is Wallet {
         uint price;
         uint filled;
     }
-
-    uint public nextOrderId = 0;
-
-    mapping(bytes32 => mapping(uint => Order[])) public orderBook;
 
     /**
      * @dev Returns orderbook with desired BuyOrSell and ticker
@@ -52,7 +52,7 @@ contract Dex is Wallet {
         if(buyOrSell == BuyOrSell.BUY){
             require(balances[msg.sender]["ETH"] >= amount.mul(price));
         }
-        else if(buyOrSell == BuyOrSell.SELL){
+        if(buyOrSell == BuyOrSell.SELL){
             require(balances[msg.sender][ticker] >= amount);
         }
 

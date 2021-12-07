@@ -11,16 +11,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  */
 contract Wallet is Ownable {
     using SafeMath for uint256;
-    
-    modifier tokenExists(bytes32 ticker){
-            require(tokenMapping[ticker].tokenAddress != address(0), "token does not exist");
-            _;
-        }
-
-    struct Token {
-            bytes32 ticker;
-            address tokenAddress;
-        }
 
     // Mapping from ticker to the Token   
     mapping(bytes32 => Token) public tokenMapping;
@@ -33,6 +23,19 @@ contract Wallet is Ownable {
 
     // Event emited when tokens are deposited
     event Deposited(uint amount, bytes32 ticker);
+
+    // Event emited when tokens are withdrawn from wallet
+    event Withdraw(uint amount, bytes32 ticker);
+
+    struct Token {
+                bytes32 ticker;
+                address tokenAddress;
+            }
+
+    modifier tokenExists(bytes32 ticker){
+            require(tokenMapping[ticker].tokenAddress != address(0), "token does not exist");
+            _;
+        }
 
     /**
      * @dev Allows users to add the capability of 
@@ -63,6 +66,7 @@ contract Wallet is Ownable {
      */
     function withdraw(uint amount, bytes32 ticker) external tokenExists(ticker) {
         require(balances[msg.sender][ticker] >= amount, "balance not sufficient");
+        emit Withdraw(amount, ticker);
         
         balances[msg.sender][ticker] = balances[msg.sender][ticker].sub(amount);
         IERC20(tokenMapping[ticker].tokenAddress).transfer(msg.sender, amount);

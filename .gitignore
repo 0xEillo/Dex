@@ -1,9 +1,10 @@
-<<<<<<< HEAD
 node_modules
 package-lock.json
-=======
 package-lock.json
 harhat.config.js
 node_modules
 package.json
->>>>>>> 0b93107b6765d3d013e675a226c6a4a4fc60f331
+artifacts
+builds
+cache
+tree.txt

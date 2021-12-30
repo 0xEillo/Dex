@@ -1,8 +1,9 @@
 # DEX
 
-## This project illustrates my first iteration of a Decentralized Exchange (Dex). I am using Truffle and Hardhat as development environments, OpenZeppelin smart contract library, Solidity for my smart contracts and Javascript for my unit tests.
+This project illustrates my first iteration of a Decentralized Exchange (Dex). I am using Truffle and Hardhat as development environments, OpenZeppelin smart contract library, Solidity for my smart contracts and Javascript for my unit tests.
 
 
+## Project Tree
 ```bash
 |   .gitignore
 |   hardhat.config.js
